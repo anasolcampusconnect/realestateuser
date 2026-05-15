@@ -145,7 +145,7 @@ const Search = () => {
       </ScrollView>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.applyBtn} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.applyBtn} onPress={() => router.push('/SearchResults')}>
           <Text style={styles.applyBtnText}>APPLY FILTERS</Text>
         </TouchableOpacity>
       </View>
