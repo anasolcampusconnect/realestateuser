@@ -26,10 +26,10 @@ const Profile = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.avatarContainer}>
+        <View style={styles.profileCard}>
           <Image 
             source={require('../assets/images/user_avatar.png')} 
-            style={styles.avatar} 
+            style={styles.profilePic} 
           />
           <Text style={styles.userName}>John Doe</Text>
           <Text style={styles.userEmail}>john.doe@example.com</Text>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 15,
     borderWidth: 3,
-    borderColor: '#f3f4f6',
+    borderColor: '#FBB03B',
   },
   userName: {
     fontSize: 20,
@@ -115,15 +115,15 @@ const styles = StyleSheet.create({
   },
   editBadge: {
     marginTop: 15,
-    backgroundColor: '#000',
+    backgroundColor: '#FBB03B',
     paddingHorizontal: 15,
     paddingVertical: 6,
     borderRadius: 20,
   },
   editBadgeText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '800',
   },
   menuContainer: {
     backgroundColor: '#f9fafb',

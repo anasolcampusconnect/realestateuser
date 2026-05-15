@@ -41,143 +41,150 @@ const PropertyDetails = () => {
     <View style={styles.container}>
       <StatusBar style="light" />
       
-      <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-        {/* Luxury Hero Image */}
-        <View style={styles.heroContainer}>
-          <Image source={images[0]} style={styles.heroImage} resizeMode="cover" />
-          <SafeAreaView style={styles.headerOverlay}>
-            <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-              <Ionicons name="arrow-back" size={24} color="#000" />
-            </TouchableOpacity>
-            <View style={styles.headerRight}>
-              <TouchableOpacity style={styles.circleBtn}>
-                <Ionicons name="share-social-outline" size={22} color="#000" />
+      <View style={styles.mainWrapper}>
+        {/* Left Side: Immersive Image (Web) / Top: Hero (Mobile) */}
+        <View style={styles.leftColumn}>
+          <View style={styles.heroContainer}>
+            <Image source={images[0]} style={styles.heroImage} resizeMode="cover" />
+            <SafeAreaView style={styles.headerOverlay}>
+              <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+                <Ionicons name="arrow-back" size={24} color="#000" />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.circleBtn}>
-                <Ionicons name="heart-outline" size={22} color="#000" />
-              </TouchableOpacity>
+              <View style={styles.headerRight}>
+                <TouchableOpacity style={styles.circleBtn}>
+                  <Ionicons name="share-social-outline" size={22} color="#000" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.circleBtn}>
+                  <Ionicons name="heart-outline" size={22} color="#000" />
+                </TouchableOpacity>
+              </View>
+            </SafeAreaView>
+            
+            <View style={styles.imageCounter}>
+              <Text style={styles.counterText}>1 / {images.length}</Text>
             </View>
-          </SafeAreaView>
-          
-          <View style={styles.imageCounter}>
-            <Text style={styles.counterText}>1 / {images.length}</Text>
           </View>
         </View>
 
-        <View style={styles.contentCard}>
-          {/* Main Title & Status */}
-          <View style={styles.mainInfo}>
-            <View style={styles.statusBadge}>
-              <Text style={styles.statusText}>NEW LAUNCH</Text>
-            </View>
-            <Text style={styles.title}>Casagrand Casablanca - Luxury Residential Projects</Text>
-            <View style={styles.locationRow}>
-              <Ionicons name="location" size={18} color="#FBB03B" />
-              <Text style={styles.locationText}>Kanakapura Road, Bengaluru</Text>
-            </View>
-          </View>
-
-          {/* Pricing Section */}
-          <View style={styles.priceContainer}>
-            <View>
-              <Text style={styles.priceLabel}>Starting Price</Text>
-              <Text style={styles.priceValue}>$1.20 Cr - $3.70 Cr</Text>
-            </View>
-            <TouchableOpacity style={styles.emiBtn}>
-              <Text style={styles.emiText}>Check EMI</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Quick Specs Grid */}
-          <View style={styles.specsGrid}>
-            <View style={styles.specItem}>
-              <Text style={styles.specTitle}>Units</Text>
-              <Text style={styles.specValueSmall}>2, 3 & 4 BHK</Text>
-            </View>
-            <View style={styles.specItem}>
-              <Text style={styles.specTitle}>Land Area</Text>
-              <Text style={styles.specValueSmall}>18 Acres</Text>
-            </View>
-            <View style={styles.specItem}>
-              <Text style={styles.specTitle}>Status</Text>
-              <Text style={styles.specValueSmall}>Under Construction</Text>
-            </View>
-          </View>
-
-          {/* Navigation Tabs */}
-          <View style={styles.tabContainer}>
-            {['Overview', 'Amenities', 'Location'].map(tab => (
-              <TouchableOpacity 
-                key={tab} 
-                onPress={() => setActiveTab(tab)}
-                style={[styles.tab, activeTab === tab && styles.activeTab]}
-              >
-                <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {activeTab === 'Overview' && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Project Overview</Text>
-              <Text style={styles.description}>
-                Experience the epitome of luxury living at Casagrand Casablanca. This prestigious 
-                residential project offers sprawling 18 acres of premium development with world-class 
-                amenities and signature architecture. Perfectly located on Kanakapura Road, it 
-                provides seamless connectivity to major IT hubs and lifestyle destinations.
-              </Text>
-            </View>
-          )}
-
-          {activeTab === 'Amenities' && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Signature Amenities</Text>
-              <View style={styles.amenitiesGrid}>
-                {amenities.map(item => (
-                  <View key={item.name} style={styles.amenityItem}>
-                    <View style={styles.amenityIconBg}>
-                      <Ionicons name={item.icon as any} size={24} color="#000" />
-                    </View>
-                    <Text style={styles.amenityText}>{item.name}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          )}
-
-          {activeTab === 'Location' && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Location Advantage</Text>
-              <View style={styles.mapPlaceholder}>
-                <Image 
-                  source={require('../assets/images/map_placeholder.png')} 
-                  style={styles.mapImg}
-                />
-                <View style={styles.mapOverlay}>
-                  <TouchableOpacity style={styles.mapBtn}>
-                    <Ionicons name="map" size={20} color="#000" />
-                    <Text style={styles.mapBtnText}>View on Google Maps</Text>
-                  </TouchableOpacity>
+        {/* Right Side: Description & Details */}
+        <View style={styles.rightColumn}>
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false} style={styles.detailsScroll}>
+            <View style={styles.contentCard}>
+              {/* Main Title & Status */}
+              <View style={styles.mainInfo}>
+                <View style={styles.statusBadge}>
+                  <Text style={styles.statusText}>NEW LAUNCH</Text>
+                </View>
+                <Text style={styles.title}>Casagrand Casablanca - Luxury Residential Projects</Text>
+                <View style={styles.locationRow}>
+                  <Ionicons name="location" size={18} color="#FBB03B" />
+                  <Text style={styles.locationText}>Kanakapura Road, Bengaluru</Text>
                 </View>
               </View>
+
+              {/* Pricing Section */}
+              <View style={styles.priceContainer}>
+                <View>
+                  <Text style={styles.priceLabel}>Starting Price</Text>
+                  <Text style={styles.priceValue}>₹ 1.20 Cr - ₹ 3.70 Cr</Text>
+                </View>
+                <TouchableOpacity style={styles.emiBtn}>
+                  <Text style={styles.emiText}>Check EMI</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Quick Specs Grid */}
+              <View style={styles.specsGrid}>
+                <View style={styles.specItem}>
+                  <Text style={styles.specTitle}>Units</Text>
+                  <Text style={styles.specValueSmall}>2, 3 & 4 BHK</Text>
+                </View>
+                <View style={styles.specItem}>
+                  <Text style={styles.specTitle}>Land Area</Text>
+                  <Text style={styles.specValueSmall}>18 Acres</Text>
+                </View>
+                <View style={styles.specItem}>
+                  <Text style={styles.specTitle}>Status</Text>
+                  <Text style={styles.specValueSmall}>Under Construction</Text>
+                </View>
+              </View>
+
+              {/* Navigation Tabs */}
+              <View style={styles.tabContainer}>
+                {['Overview', 'Amenities', 'Location'].map(tab => (
+                  <TouchableOpacity 
+                    key={tab} 
+                    onPress={() => setActiveTab(tab)}
+                    style={[styles.tab, activeTab === tab && styles.activeTab]}
+                  >
+                    <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {activeTab === 'Overview' && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Project Overview</Text>
+                  <Text style={styles.description}>
+                    Experience the epitome of luxury living at Casagrand Casablanca. This prestigious 
+                    residential project offers sprawling 18 acres of premium development with world-class 
+                    amenities and signature architecture. Perfectly located on Kanakapura Road, it 
+                    provides seamless connectivity to major IT hubs and lifestyle destinations.
+                  </Text>
+                </View>
+              )}
+
+              {activeTab === 'Amenities' && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Signature Amenities</Text>
+                  <View style={styles.amenitiesGrid}>
+                    {amenities.map(item => (
+                      <View key={item.name} style={styles.amenityItem}>
+                        <View style={styles.amenityIconBg}>
+                          <Ionicons name={item.icon as any} size={24} color="#000" />
+                        </View>
+                        <Text style={styles.amenityText}>{item.name}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              )}
+
+              {activeTab === 'Location' && (
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Location Advantage</Text>
+                  <View style={styles.mapPlaceholder}>
+                    <Image 
+                      source={require('../assets/images/map_placeholder.png')} 
+                      style={styles.mapImg}
+                    />
+                    <View style={styles.mapOverlay}>
+                      <TouchableOpacity style={styles.mapBtn}>
+                        <Ionicons name="map" size={20} color="#000" />
+                        <Text style={styles.mapBtnText}>View on Google Maps</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+
+              <View style={{ height: 120 }} />
             </View>
-          )}
+          </ScrollView>
 
-          <View style={{ height: 120 }} />
+          {/* Fixed Footer within Right Column for Web */}
+          <View style={styles.footer}>
+            <TouchableOpacity style={styles.iconFooterBtn}>
+              <Ionicons name="call" size={20} color="#000" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.siteVisitBtn} onPress={() => router.push('/SiteVisit')}>
+              <Text style={styles.siteVisitText}>BOOK SITE VISIT</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.enquireFooterBtn} onPress={() => router.push('/Inquiry')}>
+              <Text style={styles.enquireFooterText}>ENQUIRE NOW</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </ScrollView>
-
-      {/* Professional Fixed Footer */}
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.iconFooterBtn}>
-          <Ionicons name="call" size={20} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.siteVisitBtn} onPress={() => router.push('/SiteVisit')}>
-          <Text style={styles.siteVisitText}>BOOK SITE VISIT</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.enquireFooterBtn} onPress={() => router.push('/Inquiry')}>
-          <Text style={styles.enquireFooterText}>ENQUIRE NOW</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -188,9 +195,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  mainWrapper: {
+    flex: 1,
+    flexDirection: Platform.OS === 'web' && width > 900 ? 'row' : 'column',
+  },
+  leftColumn: {
+    flex: Platform.OS === 'web' && width > 900 ? 1.2 : undefined,
+    height: Platform.OS === 'web' && width > 900 ? '100%' : undefined,
+  },
+  rightColumn: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  detailsScroll: {
+    flex: 1,
+  },
   heroContainer: {
     width: '100%',
-    height: 350,
+    height: Platform.OS === 'web' && width > 900 ? '100%' : 350,
     position: 'relative',
   },
   heroImage: {
@@ -204,7 +226,8 @@ const styles = StyleSheet.create({
     right: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: Platform.OS === 'android' ? 40 : 0,
+    paddingTop: Platform.OS === 'android' ? 50 : 50, // Increased for status bar safety
+    zIndex: 10,
   },
   headerRight: {
     flexDirection: 'row',
@@ -228,7 +251,7 @@ const styles = StyleSheet.create({
   },
   imageCounter: {
     position: 'absolute',
-    bottom: 50,
+    bottom: Platform.OS === 'web' && width > 900 ? 40 : 50,
     right: 20,
     backgroundColor: 'rgba(0,0,0,0.6)',
     paddingHorizontal: 12,
@@ -243,9 +266,9 @@ const styles = StyleSheet.create({
   contentCard: {
     flex: 1,
     backgroundColor: '#fff',
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    marginTop: -35,
+    borderTopLeftRadius: Platform.OS === 'web' && width > 900 ? 0 : 35,
+    borderTopRightRadius: Platform.OS === 'web' && width > 900 ? 0 : 35,
+    marginTop: Platform.OS === 'web' && width > 900 ? 0 : -35,
     paddingTop: 30,
   },
   mainInfo: {

@@ -9,7 +9,8 @@ import {
   Dimensions,
   SafeAreaView,
   Platform,
-  ImageBackground
+  ImageBackground,
+  Modal
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -45,28 +46,61 @@ const Home = () => {
     { id: '12', title: 'The Grand', location: 'Kolkata, WB', price: '$50L to $95L', beds: 2, image: require('../assets/images/banner.png'), status: 'Launching', acres: '2.2' },
   ];
 
+  const [isCallModalVisible, setIsCallModalVisible] = useState(false);
+  const supportNumber = "+91 98765 43210";
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       
-      {/* Casagrand Style Header */}
+      {/* Call Support Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isCallModalVisible}
+        onRequestClose={() => setIsCallModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.callModalContent}>
+            <View style={styles.modalHeader}>
+              <View style={styles.iconCircle}>
+                <Ionicons name="call" size={32} color="#000" />
+              </View>
+              <Text style={styles.modalTitle}>Contact Support</Text>
+              <Text style={styles.modalSub}>Our agents are available 24/7 to assist you.</Text>
+            </View>
+
+            <View style={styles.numberBox}>
+              <Text style={styles.numberLabel}>Direct Line</Text>
+              <Text style={styles.phoneNumber}>{supportNumber}</Text>
+            </View>
+
+            <TouchableOpacity style={styles.modalCallBtn} onPress={() => setIsCallModalVisible(false)}>
+              <Ionicons name="call" size={20} color="#000" />
+              <Text style={styles.modalCallBtnText}>Call Now</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.modalCloseBtn} onPress={() => setIsCallModalVisible(false)}>
+              <Text style={styles.modalCloseBtnText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Header */}
       <SafeAreaView style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.logoRow}>
             <Text style={styles.logoText}>REAL NEST</Text>
             <View style={styles.logoTag} />
           </View>
-          
           <View style={styles.headerRight}>
-            <TouchableOpacity style={styles.callBtn}>
-              <Text style={styles.callBtnText}>CALL US</Text>
-              <Ionicons name="chevron-down" size={14} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconBtn}>
-              <Ionicons name="mic-outline" size={20} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconBtn} onPress={() => router.push('/Search')}>
-              <Ionicons name="search-outline" size={20} color="#000" />
+            <TouchableOpacity 
+              style={styles.callBtn}
+              onPress={() => setIsCallModalVisible(true)}
+            >
+              <Ionicons name="call" size={18} color="#000" />
+              <Text style={styles.callBtnText}>Book Appointment</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.iconBtn}>
               <Ionicons name="menu-outline" size={24} color="#000" />
@@ -170,7 +204,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingVertical: 15,
+    paddingTop: Platform.OS === 'web' ? 20 : 65, // Increased for maximum status bar safety
   },
   logoRow: {
     flexDirection: 'row',
@@ -194,6 +229,99 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  callModalContent: {
+    backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: 400,
+    borderRadius: 25,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  modalHeader: {
+    alignItems: 'center',
+    marginBottom: 25,
+  },
+  iconCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#FBB03B',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#000',
+    marginBottom: 8,
+  },
+  modalSub: {
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  numberBox: {
+    width: '100%',
+    backgroundColor: '#F8F9FB',
+    padding: 20,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginBottom: 25,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  numberLabel: {
+    fontSize: 12,
+    color: '#9ca3af',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 5,
+  },
+  phoneNumber: {
+    fontSize: 26,
+    fontWeight: '900',
+    color: '#000',
+    letterSpacing: 1,
+  },
+  modalCallBtn: {
+    backgroundColor: '#FBB03B',
+    flexDirection: 'row',
+    width: '100%',
+    paddingVertical: 16,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 12,
+  },
+  modalCallBtnText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  modalCloseBtn: {
+    paddingVertical: 10,
+  },
+  modalCloseBtnText: {
+    color: '#9ca3af',
+    fontSize: 14,
+    fontWeight: '700',
+  },
   callBtn: {
     backgroundColor: '#FBB03B',
     flexDirection: 'row',
@@ -213,23 +341,29 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     width: '100%',
+    height: 350,
+    overflow: 'hidden',
   },
   heroBg: {
     width: '100%',
-    height: 280,
+    height: '100%',
   },
   heroOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    justifyContent: 'flex-end',
-    padding: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   heroMainTitle: {
     color: '#fff',
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: 42,
+    fontWeight: '900',
     textAlign: 'center',
-    marginBottom: 20,
+    letterSpacing: -1,
+    textShadowColor: 'rgba(0,0,0,0.5)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 10,
   },
   floatingActions: {
     position: 'absolute',
@@ -247,14 +381,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   tabsContainer: {
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#f3f4f6',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
   },
   cityTab: {
-    paddingHorizontal: 25,
-    paddingVertical: 15,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
     borderRightWidth: 1,
-    borderRightColor: '#d1d5db',
-    minWidth: 140,
+    borderRightColor: '#e5e7eb',
+    minWidth: 180,
+    backgroundColor: '#fff',
+    alignItems: 'center',
   },
   activeCityTab: {
     backgroundColor: '#FBB03B',
@@ -278,13 +416,17 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   mainContent: {
-    paddingTop: 30,
-    paddingHorizontal: 15,
+    paddingTop: 40,
+    paddingHorizontal: Platform.OS === 'web' ? 40 : 15,
+    maxWidth: 1600,
+    alignSelf: 'center',
+    width: '100%',
   },
   propertyGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    gap: 0,
   },
   sectionHeader: {
     paddingHorizontal: 20,
@@ -307,6 +449,7 @@ const styles = StyleSheet.create({
   navItem: {
     alignItems: 'center',
     gap: 4,
+    paddingHorizontal: 12,
   },
   navText: {
     fontSize: 10,

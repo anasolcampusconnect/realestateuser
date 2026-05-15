@@ -7,6 +7,7 @@ import {
   Image, 
   Dimensions, 
   SafeAreaView,
+  Platform,
   ImageBackground
 } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -70,10 +71,12 @@ const Landing = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000',
   },
   background: {
-    width: width,
-    height: height,
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
   overlay: {
     flex: 1,
@@ -81,8 +84,10 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    paddingHorizontal: 40,
+    width: Platform.OS === 'web' ? '67%' : '100%',
+    alignSelf: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 40,
     paddingVertical: 60,
   },
   logoRow: {

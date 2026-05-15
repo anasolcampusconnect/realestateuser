@@ -16,13 +16,30 @@ const { width } = Dimensions.get('window');
 
 const SiteVisit = () => {
   const router = useRouter();
-  const [selectedDate, setSelectedDate] = useState('Oct 24, 2024');
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
   const [selectedTime, setSelectedTime] = useState('10:00 AM');
 
+  // Generate next 14 days
+  const getDays = () => {
+    const days = [];
+    for (let i = 0; i < 14; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      days.push({
+        full: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        dayNum: date.getDate(),
+        month: date.toLocaleDateString('en-US', { month: 'short' }),
+      });
+    }
+    return days;
+  };
+
+  const days = getDays();
   const timeSlots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
 
   const handleRequest = () => {
-    Alert.alert('Success', 'Your site visit request has been sent to the agent.');
+    Alert.alert('Success', `Site visit scheduled for ${selectedDate} at ${selectedTime}`);
     router.back();
   };
 
@@ -36,17 +53,34 @@ const SiteVisit = () => {
         <View style={{ width: 40 }} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.propertyPreview}>
-          <Text style={styles.propertyName}>Brookside Haven</Text>
-          <Text style={styles.propertyLocation}>Oakville, ON</Text>
+          <View style={styles.propertyInfo}>
+            <Text style={styles.propertyName}>Casagrand Casablanca</Text>
+            <Text style={styles.propertyLocation}>Kanakapura Road, Bengaluru</Text>
+          </View>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>Verified Property</Text>
+          </View>
         </View>
 
         <Text style={styles.sectionTitle}>Select Date</Text>
-        <View style={styles.calendarPlaceholder}>
-          <Text style={styles.dateText}>{selectedDate}</Text>
-          <Ionicons name="calendar-outline" size={20} color="#6b7280" />
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.dateScroller}>
+          {days.map((item, idx) => (
+            <TouchableOpacity 
+              key={idx}
+              style={[
+                styles.dateItem,
+                selectedDate === item.full && styles.selectedDateItem
+              ]}
+              onPress={() => setSelectedDate(item.full)}
+            >
+              <Text style={[styles.dayName, selectedDate === item.full && styles.selectedDateText]}>{item.dayName}</Text>
+              <Text style={[styles.dayNum, selectedDate === item.full && styles.selectedDateText]}>{item.dayNum}</Text>
+              <Text style={[styles.monthName, selectedDate === item.full && styles.selectedDateText]}>{item.month}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
         <Text style={styles.sectionTitle}>Available Slots</Text>
         <View style={styles.slotsGrid}>
@@ -115,6 +149,14 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     marginBottom: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
+  },
+  propertyInfo: {
+    flex: 1,
   },
   propertyName: {
     fontSize: 18,
@@ -126,27 +168,67 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     marginTop: 4,
   },
+  badge: {
+    backgroundColor: '#ecfdf5',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  badgeText: {
+    color: '#059669',
+    fontSize: 11,
+    fontWeight: '700',
+  },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#1a1a1a',
-    marginBottom: 15,
+    marginBottom: 20,
     marginTop: 10,
   },
-  calendarPlaceholder: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 12,
-    marginBottom: 30,
+  dateScroller: {
+    marginBottom: 35,
   },
-  dateText: {
-    fontSize: 16,
-    color: '#1a1a1a',
+  dateItem: {
+    width: 65,
+    height: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f9fafb',
+    borderRadius: 15,
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
+  },
+  selectedDateItem: {
+    backgroundColor: '#FBB03B',
+    borderColor: '#FBB03B',
+    elevation: 4,
+    shadowColor: '#FBB03B',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+  },
+  dayName: {
+    fontSize: 11,
+    color: '#94a3b8',
+    fontWeight: '700',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  dayNum: {
+    fontSize: 20,
+    color: '#1e293b',
+    fontWeight: '900',
+    marginBottom: 2,
+  },
+  monthName: {
+    fontSize: 11,
+    color: '#64748b',
+    fontWeight: '700',
+  },
+  selectedDateText: {
+    color: '#000',
   },
   slotsGrid: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
@@ -53,6 +53,9 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     >
       <View style={styles.imageContainer}>
         <Image source={propertyImages[currentImgIndex]} style={styles.image} resizeMode="cover" />
+        <View style={styles.redRibbon}>
+          <Text style={styles.redRibbonText}>Launching</Text>
+        </View>
         <View style={styles.statusRibbon}>
           <Text style={styles.statusText}>{property.status || 'New Launch'}</Text>
         </View>
@@ -63,14 +66,24 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         <Text style={styles.priceRange}>{property.price}</Text>
 
         <View style={styles.detailItem}>
-          <Ionicons name="location-outline" size={12} color="#000" />
+          <Ionicons name="location" size={16} color="#000" />
           <Text style={styles.detailValue} numberOfLines={1}>{property.location}</Text>
+        </View>
+
+        <View style={styles.servingSection}>
+          <View style={styles.servingHeader}>
+            <Ionicons name="navigate-outline" size={14} color="#6b7280" />
+            <Text style={styles.servingLabel}>Serving Location :</Text>
+          </View>
+          <Text style={styles.servingText} numberOfLines={2}>
+            {property.servingLocations || 'Selaiyur, Tambaram, Chromepet, Pallavaram, Sittalapakkam'}
+          </Text>
         </View>
 
         <View style={styles.statsRow}>
           <View style={styles.statBox}>
             <Ionicons name="resize-outline" size={12} color="#6b7280" />
-            <Text style={styles.statValue}>{property.acres || '2.4 Ac'}</Text>
+            <Text style={styles.statValue}>{property.acres || '2.5'} Ac</Text>
           </View>
           <View style={styles.statBox}>
             <Ionicons name="business-outline" size={12} color="#6b7280" />
@@ -83,77 +96,116 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 15,
     marginBottom: 20,
-    marginHorizontal: 5,
-    width: CARD_WIDTH,
-    overflow: 'hidden',
+    marginHorizontal: Platform.OS === 'web' ? '1%' : 5,
+    width: Platform.OS === 'web' ? '31.3%' : (width - 45) / 2, // 3 columns on web, 2 columns on mobile
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    elevation: 3,
+    elevation: 5,
+    overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#f3f4f6',
   },
   imageContainer: {
     width: '100%',
-    height: 120,
+    height: 160, 
     position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
   },
+  redRibbon: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    backgroundColor: '#ff4b4b',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 4,
+    zIndex: 10,
+  },
+  redRibbonText: {
+    color: '#fff',
+    fontSize: 8,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+  },
   statusRibbon: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
     backgroundColor: '#FBB03B',
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderBottomRightRadius: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderTopRightRadius: 10,
   },
   statusText: {
     color: '#000',
-    fontSize: 9,
-    fontWeight: '800',
+    fontSize: 10,
+    fontWeight: '900',
   },
   info: {
-    padding: 10,
+    padding: 15,
   },
   title: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 4,
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#111827',
+    marginBottom: 6,
   },
   priceRange: {
-    fontSize: 14,
-    fontWeight: '800',
+    fontSize: 17,
+    fontWeight: '900',
     color: '#FBB03B',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 8,
+    gap: 8,
+    marginBottom: 12,
   },
   detailValue: {
+    fontSize: 13,
+    color: '#1f2937',
+    fontWeight: '700',
+  },
+  servingSection: {
+    marginBottom: 15,
+    backgroundColor: '#f9fafb',
+    padding: 8,
+    borderRadius: 8,
+  },
+  servingHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  servingLabel: {
     fontSize: 11,
     color: '#6b7280',
+    fontWeight: '800',
+  },
+  servingText: {
+    fontSize: 11,
+    color: '#4b5563',
     fontWeight: '600',
+    lineHeight: 16,
   },
   statsRow: {
     flexDirection: 'row',
     marginTop: 5,
-    gap: 10,
+    gap: 8,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
-    paddingTop: 8,
+    borderTopColor: '#f9fafb',
+    paddingTop: 12,
     justifyContent: 'space-between',
   },
   statBox: {
@@ -163,8 +215,8 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 10,
-    color: '#6b7280',
-    fontWeight: '700',
+    color: '#1f2937',
+    fontWeight: '800',
   },
 });
 

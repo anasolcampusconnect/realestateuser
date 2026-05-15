@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "scheme": "realestateapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -17,8 +16,6 @@
       "supportsTablet": true
     },
     "android": {
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundColor": "#E6F4FE"
