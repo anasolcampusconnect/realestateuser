@@ -79,7 +79,7 @@ const Home = () => {
         {/* Full-Width Luxury Hero Section */}
         <View style={styles.heroSection}>
           <ImageBackground 
-            source={{ uri: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1470' }} 
+            source={require('../assets/images/home_hero.png')} 
             style={styles.heroBg}
           >
             <View style={styles.heroOverlay}>

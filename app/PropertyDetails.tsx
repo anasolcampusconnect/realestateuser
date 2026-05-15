@@ -150,7 +150,7 @@ const PropertyDetails = () => {
               <Text style={styles.sectionTitle}>Location Advantage</Text>
               <View style={styles.mapPlaceholder}>
                 <Image 
-                  source={{ uri: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000' }} 
+                  source={require('../assets/images/map_placeholder.png')} 
                   style={styles.mapImg}
                 />
                 <View style={styles.mapOverlay}>

@@ -26,10 +26,10 @@ const Profile = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.profileCard}>
+        <View style={styles.avatarContainer}>
           <Image 
-            source={{ uri: 'https://i.pravatar.cc/150' }} 
-            style={styles.profilePic} 
+            source={require('../assets/images/user_avatar.png')} 
+            style={styles.avatar} 
           />
           <Text style={styles.userName}>John Doe</Text>
           <Text style={styles.userEmail}>john.doe@example.com</Text>
