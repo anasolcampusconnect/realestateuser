@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   StyleSheet, 
   View, 
@@ -32,6 +32,34 @@ const PropertyDetails = () => {
     require('../assets/images/house2.jpg'),
     require('../assets/images/banner.png'),
   ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(width);
+  const scrollViewRef = useRef<ScrollView>(null);
+  // Smooth scroll to active image when currentImageIndex changes
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({
+        x: currentImageIndex * containerWidth,
+        animated: true,
+      });
+    }
+  }, [currentImageIndex, containerWidth]);
+
+  const handleLayout = (event: any) => {
+    const { width: layoutWidth } = event.nativeEvent.layout;
+    if (layoutWidth > 0) {
+      setContainerWidth(layoutWidth);
+    }
+  };
+
+  const handleScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offsetX / containerWidth);
+    if (newIndex !== currentImageIndex && newIndex >= 0 && newIndex < images.length) {
+      setCurrentImageIndex(newIndex);
+    }
+  };
 
   const amenities = [
     { name: 'Swimming Pool', icon: 'water-outline' },
@@ -71,8 +99,29 @@ const PropertyDetails = () => {
       <View style={styles.mainWrapper}>
         {/* Left Side: Immersive Image (Web) / Top: Hero (Mobile) */}
         <View style={styles.leftColumn}>
-          <View style={styles.heroContainer}>
-            <Image source={images[0]} style={styles.heroImage} resizeMode="cover" />
+          <View style={styles.heroContainer} onLayout={handleLayout}>
+            <ScrollView
+              ref={scrollViewRef}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={handleScroll}
+              style={{ width: '100%', height: '100%' }}
+            >
+              {images.map((img, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  activeOpacity={0.95}
+                  onPress={() => {
+                    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+                  }}
+                  style={{ width: containerWidth, height: '100%' }}
+                >
+                  <Image source={img} style={styles.heroImage} resizeMode="cover" />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
             <SafeAreaView style={styles.headerOverlay}>
               <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color="#000" />
@@ -88,7 +137,7 @@ const PropertyDetails = () => {
             </SafeAreaView>
             
             <View style={styles.imageCounter}>
-              <Text style={styles.counterText}>1 / {images.length}</Text>
+              <Text style={styles.counterText}>{currentImageIndex + 1} / {images.length}</Text>
             </View>
           </View>
         </View>
@@ -115,7 +164,7 @@ const PropertyDetails = () => {
                   <Text style={styles.priceLabel}>Starting Price</Text>
                   <Text style={styles.priceValue}>₹ 1.20 Cr - ₹ 3.70 Cr</Text>
                 </View>
-                <TouchableOpacity style={styles.emiBtn} onPress={() => setActiveTab('Payments')}>
+                <TouchableOpacity style={styles.emiBtn} onPress={() => router.push('/Payments')}>
                   <Text style={styles.emiText}>Check EMI</Text>
                 </TouchableOpacity>
               </View>
@@ -314,7 +363,21 @@ const PropertyDetails = () => {
 
           {/* Fixed Footer within Right Column for Web */}
           <View style={styles.footer}>
-            <TouchableOpacity style={styles.iconFooterBtn}>
+            <TouchableOpacity 
+              style={styles.iconFooterBtn}
+              onPress={() => {
+                const referenceId = Math.floor(100000 + Math.random() * 900000);
+                if (Platform.OS === 'web') {
+                  window.alert(`Calling Support: +91 98765 43210\nYour Call Query Reference: #${referenceId}`);
+                } else {
+                  Alert.alert(
+                    'Calling Support', 
+                    `Initiating call to +91 98765 43210\n\nYour Call Query Reference: #${referenceId}`,
+                    [{ text: 'OK' }]
+                  );
+                }
+              }}
+            >
               <Ionicons name="call" size={20} color="#000" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.siteVisitBtn} onPress={() => router.push('/SiteVisit')}>

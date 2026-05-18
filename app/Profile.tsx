@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -6,6 +6,25 @@ import BottomNav from '../components/BottomNav';
 
 const Profile = () => {
   const router = useRouter();
+  const [randomNumber, setRandomNumber] = useState<number | null>(null);
+
+  // Load saved random number on mount (Web)
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const saved = localStorage.getItem('real_estate_profile_token');
+      if (saved) {
+        setRandomNumber(Number(saved));
+      }
+    }
+  }, []);
+
+  const handleGenerateRandom = () => {
+    const randomVal = Math.floor(100000 + Math.random() * 900000);
+    setRandomNumber(randomVal);
+    if (Platform.OS === 'web') {
+      localStorage.setItem('real_estate_profile_token', String(randomVal));
+    }
+  };
 
   const menuItems: { id: string, title: string, icon: keyof typeof Ionicons.glyphMap, route: any }[] = [
     { id: '1', title: 'Edit Profile', icon: 'person-outline', route: '/EditProfile' },
@@ -34,7 +53,15 @@ const Profile = () => {
           />
           <Text style={styles.userName}>John Doe</Text>
           <Text style={styles.userEmail}>john.doe@example.com</Text>
-          <TouchableOpacity style={styles.editBadge}>
+          
+          {randomNumber !== null && (
+            <View style={styles.randomNumberContainer}>
+              <Ionicons name="key-outline" size={14} color="#d97706" style={{ marginRight: 4 }} />
+              <Text style={styles.randomNumberText}>Access Token: #{randomNumber}</Text>
+            </View>
+          )}
+
+          <TouchableOpacity style={styles.editBadge} onPress={handleGenerateRandom}>
             <Text style={styles.editBadgeText}>Premium Member</Text>
           </TouchableOpacity>
         </View>
@@ -126,6 +153,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
     marginTop: 4,
+  },
+  randomNumberContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+    backgroundColor: '#fffbeb',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#fef3c7',
+  },
+  randomNumberText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#d97706',
   },
   editBadge: {
     marginTop: 15,
