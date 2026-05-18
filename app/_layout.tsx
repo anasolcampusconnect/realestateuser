@@ -15,6 +15,7 @@ export default function Layout() {
         <Stack.Screen name="Register" options={{ headerShown: false }} />
         <Stack.Screen name="Home" options={{ headerShown: false }} />
         <Stack.Screen name="PropertyDetails" options={{ headerShown: false }} />
+        <Stack.Screen name="EditProfile" options={{ headerShown: false }} />
       </Stack>
     </FavoritesProvider>
   );

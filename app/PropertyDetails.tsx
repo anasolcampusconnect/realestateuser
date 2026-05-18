@@ -9,11 +9,13 @@ import {
   Dimensions,
   SafeAreaView,
   Platform,
-  ImageBackground
+  ImageBackground,
+  Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useFavorites } from '../context/FavoritesContext';
 
 const { width } = Dimensions.get('window');
 
@@ -21,6 +23,9 @@ const PropertyDetails = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [activeTab, setActiveTab] = useState('Overview');
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const propertyId = typeof id === 'string' ? id : 'default-id';
+  const isFav = isFavorite(propertyId);
 
   const images = [
     require('../assets/images/house1.jpg'),
@@ -36,6 +41,28 @@ const PropertyDetails = () => {
     { name: 'Jogging Track', icon: 'walk-outline' },
     { name: '24/7 Security', icon: 'shield-checkmark-outline' },
   ];
+
+  const toggleFavorite = () => {
+    if (isFav) {
+      removeFavorite(propertyId);
+    } else {
+      addFavorite({
+        id: propertyId,
+        title: 'Real Nest Casablanca',
+        location: 'Kanakapura Road, Bengaluru',
+        price: '₹ 1.20 Cr - ₹ 3.70 Cr',
+        beds: 3,
+        image: images[0],
+        status: 'NEW LAUNCH',
+        acres: '18 Acres'
+      });
+      if (Platform.OS === 'web') {
+        window.alert('Added to wishlist');
+      } else {
+        Alert.alert('Wishlist', 'Added to wishlist');
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -54,8 +81,8 @@ const PropertyDetails = () => {
                 <TouchableOpacity style={styles.circleBtn}>
                   <Ionicons name="share-social-outline" size={22} color="#000" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.circleBtn}>
-                  <Ionicons name="heart-outline" size={22} color="#000" />
+                <TouchableOpacity style={styles.circleBtn} onPress={toggleFavorite}>
+                  <Ionicons name={isFav ? "heart" : "heart-outline"} size={22} color={isFav ? "#ff4b4b" : "#000"} />
                 </TouchableOpacity>
               </View>
             </SafeAreaView>
@@ -75,7 +102,7 @@ const PropertyDetails = () => {
                 <View style={styles.statusBadge}>
                   <Text style={styles.statusText}>NEW LAUNCH</Text>
                 </View>
-                <Text style={styles.title}>Casagrand Casablanca - Luxury Residential Projects</Text>
+                <Text style={styles.title}>Real Nest Casablanca - Luxury Residential Projects</Text>
                 <View style={styles.locationRow}>
                   <Ionicons name="location" size={18} color="#FBB03B" />
                   <Text style={styles.locationText}>Kanakapura Road, Bengaluru</Text>
@@ -110,23 +137,29 @@ const PropertyDetails = () => {
               </View>
 
               {/* Navigation Tabs */}
-              <View style={styles.tabContainer}>
-                {['Overview', 'Amenities', 'Location'].map(tab => (
-                  <TouchableOpacity 
-                    key={tab} 
-                    onPress={() => setActiveTab(tab)}
-                    style={[styles.tab, activeTab === tab && styles.activeTab]}
-                  >
-                    <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
-                  </TouchableOpacity>
-                ))}
+              <View style={styles.tabOuterContainer}>
+                <ScrollView 
+                  horizontal 
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.tabScrollContent}
+                >
+                  {['Overview', 'Amenities', 'Documents', 'Payments', 'Location'].map(tab => (
+                    <TouchableOpacity 
+                      key={tab} 
+                      onPress={() => setActiveTab(tab)}
+                      style={[styles.tab, activeTab === tab && styles.activeTab]}
+                    >
+                      <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
               </View>
 
               {activeTab === 'Overview' && (
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Project Overview</Text>
                   <Text style={styles.description}>
-                    Experience the epitome of luxury living at Casagrand Casablanca. This prestigious 
+                    Experience the epitome of luxury living at Real Nest Casablanca. This prestigious 
                     residential project offers sprawling 18 acres of premium development with world-class 
                     amenities and signature architecture. Perfectly located on Kanakapura Road, it 
                     provides seamless connectivity to major IT hubs and lifestyle destinations.
@@ -146,6 +179,113 @@ const PropertyDetails = () => {
                         <Text style={styles.amenityText}>{item.name}</Text>
                       </View>
                     ))}
+                  </View>
+                </View>
+              )}
+
+              {activeTab === 'Documents' && (
+                <View style={styles.section}>
+                  <View style={styles.sectionHeaderRow}>
+                    <Text style={styles.sectionTitle}>Official Agreements</Text>
+                    <TouchableOpacity style={styles.viewMoreLink} onPress={() => router.push('/Documents')}>
+                      <Text style={styles.viewMoreText}>View All Page</Text>
+                      <Ionicons name="arrow-forward" size={14} color="#FBB03B" />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.sectionSub}>Review or download essential legal documentation for this property.</Text>
+                  
+                  <View style={styles.detailDocList}>
+                    <View style={styles.detailDocCard}>
+                      <View style={styles.detailDocIconBg}>
+                        <Ionicons name="document-text" size={20} color="#000" />
+                      </View>
+                      <View style={styles.detailDocMeta}>
+                        <Text style={styles.detailDocTitle}>Sale Agreement Draft</Text>
+                        <Text style={styles.detailDocInfo}>PDF • 2.4 MB • Approved</Text>
+                      </View>
+                      <TouchableOpacity style={styles.detailDocActionBtn} onPress={() => router.push('/Documents')}>
+                        <Ionicons name="download-outline" size={18} color="#000" />
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.detailDocCard}>
+                      <View style={styles.detailDocIconBg}>
+                        <Ionicons name="shield-checkmark" size={20} color="#000" />
+                      </View>
+                      <View style={styles.detailDocMeta}>
+                        <Text style={styles.detailDocTitle}>Title Deed & Patta</Text>
+                        <Text style={styles.detailDocInfo}>PDF • 4.1 MB • Verified</Text>
+                      </View>
+                      <TouchableOpacity style={styles.detailDocActionBtn} onPress={() => router.push('/Documents')}>
+                        <Ionicons name="download-outline" size={18} color="#000" />
+                      </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.detailDocCard}>
+                      <View style={styles.detailDocIconBg}>
+                        <Ionicons name="business" size={20} color="#000" />
+                      </View>
+                      <View style={styles.detailDocMeta}>
+                        <Text style={styles.detailDocTitle}>RERA Certificate</Text>
+                        <Text style={styles.detailDocInfo}>PDF • 950 KB • Approved</Text>
+                      </View>
+                      <TouchableOpacity style={styles.detailDocActionBtn} onPress={() => router.push('/Documents')}>
+                        <Ionicons name="download-outline" size={18} color="#000" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              )}
+
+              {activeTab === 'Payments' && (
+                <View style={styles.section}>
+                  <View style={styles.sectionHeaderRow}>
+                    <Text style={styles.sectionTitle}>Booking & Payments</Text>
+                    <TouchableOpacity style={styles.viewMoreLink} onPress={() => router.push('/Payments')}>
+                      <Text style={styles.viewMoreText}>View Ledger</Text>
+                      <Ionicons name="arrow-forward" size={14} color="#FBB03B" />
+                    </TouchableOpacity>
+                  </View>
+                  
+                  {/* EMI Calculator Preview */}
+                  <View style={styles.paymentCardPreview}>
+                    <Text style={styles.paymentCardLabel}>Estimated EMI Details</Text>
+                    <View style={styles.emiPreviewGrid}>
+                      <View style={styles.emiPreviewItem}>
+                        <Text style={styles.emiPreviewTitle}>Loan Amount (80%)</Text>
+                        <Text style={styles.emiPreviewVal}>₹ 96.0 Lakhs</Text>
+                      </View>
+                      <View style={styles.emiPreviewItem}>
+                        <Text style={styles.emiPreviewTitle}>Interest Rate</Text>
+                        <Text style={styles.emiPreviewVal}>8.5% p.a.</Text>
+                      </View>
+                      <View style={styles.emiPreviewItem}>
+                        <Text style={styles.emiPreviewTitle}>Tenure</Text>
+                        <Text style={styles.emiPreviewVal}>20 Years</Text>
+                      </View>
+                      <View style={styles.emiPreviewItem}>
+                        <Text style={styles.emiPreviewTitle}>Monthly EMI</Text>
+                        <Text style={styles.emiPreviewValGold}>₹ 83,300/mo</Text>
+                      </View>
+                    </View>
+                    <TouchableOpacity style={styles.cardPayBtn} onPress={() => router.push('/Payments')}>
+                      <Text style={styles.cardPayBtnText}>Check Detailed EMI Calculator</Text>
+                      <Ionicons name="calculator-outline" size={15} color="#000" />
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Advance Booking Trigger */}
+                  <View style={styles.paymentCardPreviewDark}>
+                    <View style={styles.paymentDarkRow}>
+                      <View>
+                        <Text style={styles.darkLabel}>Advance Booking Token</Text>
+                        <Text style={styles.darkPrice}>₹ 50,000</Text>
+                      </View>
+                      <TouchableOpacity style={styles.darkActionBtn} onPress={() => router.push('/Payments')}>
+                        <Text style={styles.darkActionBtnText}>PAY ADVANCE</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <Text style={styles.darkSub}>Secure your preferred apartment unit immediately. Fully refundable in 48 hours.</Text>
                   </View>
                 </View>
               )}
@@ -361,12 +501,14 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 4,
   },
-  tabContainer: {
-    flexDirection: 'row',
+  tabOuterContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#f3f4f6',
-    paddingHorizontal: 25,
     marginBottom: 25,
+  },
+  tabScrollContent: {
+    paddingHorizontal: 25,
+    flexDirection: 'row',
   },
   tab: {
     paddingVertical: 12,
@@ -406,7 +548,7 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   amenityItem: {
-    width: (width - 80) / 3,
+    width: '30%',
     alignItems: 'center',
     marginBottom: 10,
   },
@@ -465,7 +607,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 25,
     paddingVertical: 20,
-    paddingBottom: Platform.OS === 'ios' ? 40 : 20,
+    paddingBottom: Platform.OS === 'web' ? 20 : (Platform.OS === 'ios' ? 42 : 30),
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
     gap: 15,
@@ -504,6 +646,174 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '800',
     color: '#000',
+  },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  viewMoreLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  viewMoreText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#FBB03B',
+  },
+  sectionSub: {
+    fontSize: 13,
+    color: '#6b7280',
+    marginBottom: 20,
+    fontWeight: '500',
+  },
+  detailDocList: {
+    gap: 12,
+  },
+  detailDocCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F7F8F9',
+    borderRadius: 15,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  detailDocIconBg: {
+    width: 42,
+    height: 42,
+    borderRadius: 10,
+    backgroundColor: '#FBB03B',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailDocMeta: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  detailDocTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#000',
+  },
+  detailDocInfo: {
+    fontSize: 11,
+    color: '#6b7280',
+    marginTop: 2,
+    fontWeight: '600',
+  },
+  detailDocActionBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paymentCardPreview: {
+    backgroundColor: '#F7F8F9',
+    borderRadius: 18,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    marginBottom: 20,
+  },
+  paymentCardLabel: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#6b7280',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 12,
+  },
+  emiPreviewGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    marginBottom: 15,
+  },
+  emiPreviewItem: {
+    width: '46%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#f3f4f6',
+  },
+  emiPreviewTitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#9ca3af',
+  },
+  emiPreviewVal: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#000',
+    marginTop: 2,
+  },
+  emiPreviewValGold: {
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#FBB03B',
+    marginTop: 2,
+  },
+  cardPayBtn: {
+    backgroundColor: '#FBB03B',
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 12,
+  },
+  cardPayBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#000',
+  },
+  paymentCardPreviewDark: {
+    backgroundColor: '#000',
+    borderRadius: 18,
+    padding: 18,
+  },
+  paymentDarkRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  darkLabel: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#9ca3af',
+    textTransform: 'uppercase',
+  },
+  darkPrice: {
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#FBB03B',
+    marginTop: 2,
+  },
+  darkActionBtn: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  darkActionBtnText: {
+    fontSize: 11,
+    fontWeight: '900',
+    color: '#000',
+  },
+  darkSub: {
+    fontSize: 11,
+    color: '#9ca3af',
+    lineHeight: 15,
+    fontWeight: '500',
   },
 });
 

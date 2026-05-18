@@ -56,7 +56,7 @@ const SiteVisit = () => {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.propertyPreview}>
           <View style={styles.propertyInfo}>
-            <Text style={styles.propertyName}>Casagrand Casablanca</Text>
+            <Text style={styles.propertyName}>Real Nest Casablanca</Text>
             <Text style={styles.propertyLocation}>Kanakapura Road, Bengaluru</Text>
           </View>
           <View style={styles.badge}>

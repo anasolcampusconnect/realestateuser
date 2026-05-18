@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import PaymentCard from '../components/PaymentCard';
+import BottomNav from '../components/BottomNav';
 
 const Payments = () => {
   const router = useRouter();
@@ -64,6 +65,8 @@ const Payments = () => {
           <PaymentCard key={item.id} transaction={item} />
         ))}
       </ScrollView>
+
+      <BottomNav activeTab="Projects" />
     </View>
   );
 };
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 60,
+    paddingTop: Platform.OS === 'web' ? 20 : 60,
   },
   header: {
     flexDirection: 'row',

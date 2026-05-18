@@ -44,7 +44,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
   return (
     <TouchableOpacity 
-      style={styles.card}
+      style={styles.container}
       activeOpacity={0.9}
       onPress={() => router.push({
         pathname: '/PropertyDetails',
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 15,
     marginBottom: 20,
-    marginHorizontal: Platform.OS === 'web' ? '1%' : 5,
-    width: Platform.OS === 'web' ? '31.3%' : (width - 45) / 2, // 3 columns on web, 2 columns on mobile
+    marginHorizontal: Platform.OS === 'web' ? 0 : 3,
+    width: Platform.OS === 'web' ? '31%' : '98%', // 3 columns on web, singularly (full width) on phone
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: 160, 
+    height: Platform.OS === 'web' ? 160 : 180, 
     position: 'relative',
   },
   image: {
@@ -151,53 +151,53 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   info: {
-    padding: 15,
+    padding: Platform.OS === 'web' ? 15 : 12,
   },
   title: {
-    fontSize: 18,
+    fontSize: Platform.OS === 'web' ? 18 : 15,
     fontWeight: '800',
     color: '#111827',
-    marginBottom: 6,
+    marginBottom: Platform.OS === 'web' ? 6 : 4,
   },
   priceRange: {
-    fontSize: 17,
+    fontSize: Platform.OS === 'web' ? 17 : 14,
     fontWeight: '900',
     color: '#FBB03B',
-    marginBottom: 15,
+    marginBottom: Platform.OS === 'web' ? 15 : 10,
   },
   detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginBottom: 12,
+    gap: Platform.OS === 'web' ? 8 : 6,
+    marginBottom: Platform.OS === 'web' ? 12 : 8,
   },
   detailValue: {
-    fontSize: 13,
+    fontSize: Platform.OS === 'web' ? 13 : 11,
     color: '#1f2937',
     fontWeight: '700',
   },
   servingSection: {
-    marginBottom: 15,
+    marginBottom: Platform.OS === 'web' ? 15 : 10,
     backgroundColor: '#f9fafb',
-    padding: 8,
+    padding: Platform.OS === 'web' ? 8 : 8,
     borderRadius: 8,
   },
   servingHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 4,
+    gap: Platform.OS === 'web' ? 6 : 4,
+    marginBottom: Platform.OS === 'web' ? 4 : 4,
   },
   servingLabel: {
-    fontSize: 11,
+    fontSize: Platform.OS === 'web' ? 11 : 10,
     color: '#6b7280',
     fontWeight: '800',
   },
   servingText: {
-    fontSize: 11,
+    fontSize: Platform.OS === 'web' ? 11 : 10,
     color: '#4b5563',
     fontWeight: '600',
-    lineHeight: 16,
+    lineHeight: Platform.OS === 'web' ? 16 : 14,
   },
   statsRow: {
     flexDirection: 'row',

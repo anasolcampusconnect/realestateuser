@@ -1,25 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import PropertyCard from '../components/PropertyCard';
+import BottomNav from '../components/BottomNav';
+import { useFavorites } from '../context/FavoritesContext';
 
 const Favorites = () => {
   const router = useRouter();
+  const { favorites } = useFavorites();
 
-  const favoriteProperties = [
-    {
-      id: '1',
-      title: 'Redwood Villas',
-      location: 'Mississauga, ON',
-      price: '$785,000',
-      beds: 3,
-      baths: 2,
-      garage: 1,
-      image: require('../assets/images/house1.jpg'),
-      type: 'House'
-    }
-  ];
+
 
   return (
     <View style={styles.container}>
@@ -32,10 +23,12 @@ const Favorites = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {favoriteProperties.length > 0 ? (
-          favoriteProperties.map(property => (
-            <PropertyCard key={property.id} property={property} />
-          ))
+        {favorites.length > 0 ? (
+          <View style={styles.grid}>
+            {favorites.map(property => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </View>
         ) : (
           <View style={styles.emptyState}>
             <Ionicons name="heart-outline" size={80} color="#e5e7eb" />
@@ -47,6 +40,8 @@ const Favorites = () => {
           </View>
         )}
       </ScrollView>
+
+      <BottomNav activeTab="Saved" />
     </View>
   );
 };
@@ -55,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 60,
+    paddingTop: Platform.OS === 'web' ? 20 : 60,
   },
   header: {
     flexDirection: 'row',
@@ -75,8 +70,14 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
   },
   scrollContent: {
-    paddingHorizontal: 25,
     paddingBottom: 40,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    gap: 20,
+    paddingHorizontal: 15,
   },
   emptyState: {
     flex: 1,

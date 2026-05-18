@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import BottomNav from '../components/BottomNav';
 
 const Profile = () => {
   const router = useRouter();
 
   const menuItems: { id: string, title: string, icon: keyof typeof Ionicons.glyphMap, route: any }[] = [
-    { id: '1', title: 'Edit Profile', icon: 'person-outline', route: '/Profile' },
+    { id: '1', title: 'Edit Profile', icon: 'person-outline', route: '/EditProfile' },
     { id: '2', title: 'My Site Visits', icon: 'calendar-outline', route: '/SiteVisit' },
     { id: '3', title: 'Payment History', icon: 'card-outline', route: '/Payments' },
     { id: '4', title: 'My Documents', icon: 'document-text-outline', route: '/Documents' },
@@ -56,12 +57,25 @@ const Profile = () => {
 
         <TouchableOpacity 
           style={styles.logoutButton}
-          onPress={() => router.replace('/')}
+          onPress={() => {
+            if (Platform.OS === 'web') {
+              if (window.confirm('Do you want to log out?')) {
+                router.replace('/');
+              }
+            } else {
+              Alert.alert('Log Out', 'Do you want to log out?', [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Log Out', onPress: () => router.replace('/'), style: 'destructive' }
+              ]);
+            }
+          }}
         >
           <Ionicons name="log-out-outline" size={20} color="#ff4b4b" />
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <BottomNav activeTab="Account" />
     </View>
   );
 };
@@ -70,7 +84,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 60,
+    paddingTop: Platform.OS === 'web' ? 20 : 60,
   },
   header: {
     flexDirection: 'row',
