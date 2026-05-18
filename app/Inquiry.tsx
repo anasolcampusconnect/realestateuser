@@ -18,7 +18,11 @@ const Inquiry = () => {
   const [message, setMessage] = useState('');
 
   const handleSend = () => {
-    Alert.alert('Sent', 'Your inquiry has been sent to the agent.');
+    if (Platform.OS === 'web') {
+      window.alert('Your inquiry has been sent to the agent.');
+    } else {
+      Alert.alert('Sent', 'Your inquiry has been sent to the agent.');
+    }
     router.back();
   };
 
@@ -44,7 +48,16 @@ const Inquiry = () => {
             <Text style={styles.agentName}>Luxe Realty Group</Text>
             <Text style={styles.agentStatus}>Online</Text>
           </View>
-          <TouchableOpacity style={styles.callButton}>
+          <TouchableOpacity 
+            style={styles.callButton}
+            onPress={() => {
+              if (Platform.OS === 'web') {
+                window.alert('Calling Support: +91 98765 43210');
+              } else {
+                Alert.alert('Calling Support', 'Initiating call to +91 98765 43210');
+              }
+            }}
+          >
             <Ionicons name="call" size={20} color="#000" />
           </TouchableOpacity>
         </View>

@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -39,7 +40,11 @@ const SiteVisit = () => {
   const timeSlots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
 
   const handleRequest = () => {
-    Alert.alert('Success', `Site visit scheduled for ${selectedDate} at ${selectedTime}`);
+    if (Platform.OS === 'web') {
+      window.alert(`Site visit scheduled successfully for ${selectedDate} at ${selectedTime}`);
+    } else {
+      Alert.alert('Success', `Site visit scheduled for ${selectedDate} at ${selectedTime}`);
+    }
     router.back();
   };
 

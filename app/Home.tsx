@@ -215,13 +215,22 @@ const Home = () => {
               
               {/* Vertical Floating Actions */}
               <View style={styles.floatingActions}>
-                <TouchableOpacity style={styles.floatBtn}>
+                <TouchableOpacity style={styles.floatBtn} onPress={() => router.push('/Inquiry')}>
                   <Ionicons name="create-outline" size={20} color="#000" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.floatBtn}>
+                <TouchableOpacity style={styles.floatBtn} onPress={() => setIsCallModalVisible(true)}>
                   <Ionicons name="call-outline" size={20} color="#000" />
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.floatBtn, { backgroundColor: '#25D366' }]}>
+                <TouchableOpacity 
+                  style={[styles.floatBtn, { backgroundColor: '#25D366' }]}
+                  onPress={() => {
+                    if (Platform.OS === 'web') {
+                      window.alert('Opening WhatsApp Support chat with +91 98765 43210...');
+                    } else {
+                      Alert.alert('WhatsApp Support', 'Opening WhatsApp Support chat with +91 98765 43210...');
+                    }
+                  }}
+                >
                   <Ionicons name="logo-whatsapp" size={20} color="#fff" />
                 </TouchableOpacity>
               </View>

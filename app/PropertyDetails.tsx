@@ -115,7 +115,7 @@ const PropertyDetails = () => {
                   <Text style={styles.priceLabel}>Starting Price</Text>
                   <Text style={styles.priceValue}>₹ 1.20 Cr - ₹ 3.70 Cr</Text>
                 </View>
-                <TouchableOpacity style={styles.emiBtn}>
+                <TouchableOpacity style={styles.emiBtn} onPress={() => setActiveTab('Payments')}>
                   <Text style={styles.emiText}>Check EMI</Text>
                 </TouchableOpacity>
               </View>
