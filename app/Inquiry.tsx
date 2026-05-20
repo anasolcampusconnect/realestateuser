@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { Colors } from '../constants/theme';
 
 const Inquiry = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const Inquiry = () => {
     >
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.title}>Contact Agent</Text>
         <View style={{ width: 40 }} />
@@ -42,7 +43,7 @@ const Inquiry = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.agentBanner}>
           <View style={styles.agentImagePlaceholder}>
-            <Ionicons name="person" size={40} color="#d1d5db" />
+            <Ionicons name="person" size={40} color={Colors.textLight} />
           </View>
           <View style={styles.agentMeta}>
             <Text style={styles.agentName}>Luxe Realty Group</Text>
@@ -58,7 +59,7 @@ const Inquiry = () => {
               }
             }}
           >
-            <Ionicons name="call" size={20} color="#000" />
+            <Ionicons name="call" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
 
@@ -71,6 +72,7 @@ const Inquiry = () => {
         <TextInput
           style={styles.messageInput}
           placeholder="Type your questions here..."
+          placeholderTextColor={Colors.textLight}
           value={message}
           onChangeText={setMessage}
           multiline
@@ -79,7 +81,7 @@ const Inquiry = () => {
 
         <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
           <Text style={styles.sendButtonText}>Send Message</Text>
-          <Ionicons name="send" size={18} color="#000" />
+          <Ionicons name="send" size={18} color={Colors.white} />
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -89,7 +91,7 @@ const Inquiry = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingTop: 60,
   },
   header: {
@@ -106,8 +108,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   scrollContent: {
     paddingHorizontal: 25,
@@ -116,20 +118,22 @@ const styles = StyleSheet.create({
   agentBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     padding: 15,
     borderRadius: 20,
     marginBottom: 30,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   agentImagePlaceholder: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.lightGray,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
   },
   agentMeta: {
     flex: 1,
@@ -137,53 +141,55 @@ const styles = StyleSheet.create({
   },
   agentName: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   agentStatus: {
     fontSize: 12,
-    color: '#10b981',
-    fontWeight: '600',
+    color: '#10b981', // Clean bright green status
+    fontWeight: '700',
   },
   callButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
     marginBottom: 10,
   },
   subjectBox: {
     padding: 15,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     marginBottom: 20,
   },
   subjectText: {
     fontSize: 15,
-    color: '#1a1a1a',
+    color: Colors.text,
+    fontWeight: '600',
   },
   messageInput: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 12,
     padding: 15,
     fontSize: 16,
+    color: Colors.text,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     minHeight: 180,
     textAlignVertical: 'top',
     marginBottom: 40,
   },
   sendButton: {
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   sendButtonText: {
-    color: '#000',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '800',
   },

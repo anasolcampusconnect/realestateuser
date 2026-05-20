@@ -5,18 +5,17 @@ import { useRouter } from 'expo-router';
 import PropertyCard from '../components/PropertyCard';
 import BottomNav from '../components/BottomNav';
 import { useFavorites } from '../context/FavoritesContext';
+import { Colors } from '../constants/theme';
 
 const Favorites = () => {
   const router = useRouter();
   const { favorites } = useFavorites();
 
-
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.title}>Favorites</Text>
         <View style={{ width: 40 }} />
@@ -31,7 +30,7 @@ const Favorites = () => {
           </View>
         ) : (
           <View style={styles.emptyState}>
-            <Ionicons name="heart-outline" size={80} color="#e5e7eb" />
+            <Ionicons name="heart-outline" size={80} color={Colors.border} />
             <Text style={styles.emptyTitle}>No Favorites Yet</Text>
             <Text style={styles.emptyText}>Start exploring properties and save them here.</Text>
             <TouchableOpacity style={styles.exploreButton} onPress={() => router.push('/Home')}>
@@ -49,7 +48,7 @@ const Favorites = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingTop: Platform.OS === 'web' ? 20 : 60,
   },
   header: {
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.text,
   },
   scrollContent: {
     paddingBottom: 40,
@@ -88,25 +87,25 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.text,
     marginTop: 20,
   },
   emptyText: {
     fontSize: 15,
-    color: '#6b7280',
+    color: Colors.textMuted,
     textAlign: 'center',
     marginTop: 10,
     paddingHorizontal: 40,
   },
   exploreButton: {
     marginTop: 30,
-    backgroundColor: '#E4FF63',
+    backgroundColor: Colors.primary,
     paddingHorizontal: 40,
     paddingVertical: 18,
     borderRadius: 20,
   },
   exploreButtonText: {
-    color: '#000',
+    color: Colors.secondary,
     fontSize: 16,
     fontWeight: '700',
   },

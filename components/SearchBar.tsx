@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../constants/theme';
 
 interface SearchBarProps {
   value: string;
@@ -11,23 +12,21 @@ const SearchBar = ({ value, onChangeText }: SearchBarProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBox}>
-        <Ionicons name="search" size={20} color="#6b7280" />
+        <Ionicons name="search" size={20} color={Colors.textMuted} />
         <TextInput
           style={styles.input}
           placeholder="Search your home.."
           value={value}
           onChangeText={onChangeText}
-          placeholderTextColor="#6b7280"
+          placeholderTextColor={Colors.textMuted}
         />
         <TouchableOpacity style={styles.filterIcon}>
-          <Ionicons name="options-outline" size={20} color="#000" />
+          <Ionicons name="options-outline" size={20} color={Colors.secondary} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-import { TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,13 +36,13 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardBg,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     borderRadius: 15,
     paddingHorizontal: 15,
     height: 55,
-    shadowColor: '#000',
+    shadowColor: Colors.secondary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 10,
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     marginLeft: 10,
-    color: '#1a1a1a',
+    color: Colors.text,
   },
   filterIcon: {
     padding: 5,

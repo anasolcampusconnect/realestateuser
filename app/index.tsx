@@ -14,6 +14,8 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 
+import { Colors } from '../constants/theme';
+
 const { width, height } = Dimensions.get('window');
 
 const Landing = () => {
@@ -46,7 +48,7 @@ const Landing = () => {
                   onPress={() => router.push('/Home')}
                 >
                   <Text style={styles.primaryBtnText}>EXPLORE PROJECTS</Text>
-                  <Ionicons name="arrow-forward" size={18} color="#000" />
+                  <Ionicons name="arrow-forward" size={18} color={Colors.white} />
                 </TouchableOpacity>
 
                 <TouchableOpacity 
@@ -71,7 +73,7 @@ const Landing = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: Colors.secondary,
   },
   background: {
     flex: 1,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   safeArea: {
     flex: 1,
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
   logoTag: {
     width: 20,
     height: 20,
-    backgroundColor: '#FBB03B',
+    backgroundColor: '#B8D8BA', // High-contrast premium pastel silk sage
     marginLeft: 6,
     transform: [{ skewX: '-20deg' }],
   },
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     maxWidth: 600,
   },
   welcomeText: {
-    color: '#FBB03B',
+    color: '#B8D8BA', // High-contrast premium pastel silk sage - perfectly readable on dark overlay
     fontSize: 16,
     fontWeight: '800',
     letterSpacing: 2,
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   primaryBtn: {
-    backgroundColor: '#FBB03B',
+    backgroundColor: '#4C6049', // Richer, more vibrant green that pops against the dark overlay
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
     minWidth: 220,
   },
   primaryBtnText: {
-    color: '#000',
+    color: Colors.white,
     fontSize: 14,
     fontWeight: '900',
     letterSpacing: 0.5,

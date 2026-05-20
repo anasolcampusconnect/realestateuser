@@ -8,6 +8,8 @@ import {
   TextStyle 
 } from 'react-native';
 
+import { Colors } from '../constants/theme';
+
 interface ButtonProps {
   title: string;
   onPress: () => void;
@@ -38,6 +40,7 @@ const Button = ({
   const getTextStyle = () => {
     switch (type) {
       case 'outline': return styles.outlineText;
+      case 'secondary': return styles.secondaryText;
       default: return styles.buttonText;
     }
   };
@@ -50,7 +53,7 @@ const Button = ({
       activeOpacity={0.8}
     >
       {loading ? (
-        <ActivityIndicator color={type === 'outline' ? '#000' : '#fff'} />
+        <ActivityIndicator color={type === 'outline' ? Colors.text : Colors.white} />
       ) : (
         <Text style={[getTextStyle(), textStyle]}>{title}</Text>
       )}
@@ -67,23 +70,30 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   primary: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.primary,
   },
   secondary: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.secondary,
   },
   outline: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
   },
   buttonText: {
-    color: '#fff',
+    color: Colors.white, // Linen white text on forest green primary button for optimal readability
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+  },
+  secondaryText: {
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: '700',
   },
   outlineText: {
-    color: '#000',
+    color: Colors.text,
+    fontSize: 16,
+    fontWeight: '600',
   },
   disabled: {
     opacity: 0.5,

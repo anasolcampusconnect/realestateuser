@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-
-const { width } = Dimensions.get('window');
-const CARD_WIDTH = (width - 60) / 3; // 3 columns with padding
+import { Colors } from '../constants/theme';
 
 interface PropertyCardProps {
   property: {
@@ -26,6 +24,8 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const router = useRouter();
+  const { width } = useWindowDimensions();
+  const isMobile = width < 768;
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
   // Mock array for moving images
@@ -44,14 +44,20 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
   return (
     <TouchableOpacity 
-      style={styles.container}
+      style={[
+        styles.container,
+        {
+          width: isMobile ? '98%' : '31%', // dynamic width based on breakpoint
+          marginHorizontal: isMobile ? 3 : 0,
+        }
+      ]}
       activeOpacity={0.9}
       onPress={() => router.push({
         pathname: '/PropertyDetails',
         params: { id: property.id }
       })}
     >
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, { height: isMobile ? 180 : 160 }]}>
         <Image source={propertyImages[currentImgIndex]} style={styles.image} resizeMode="cover" />
         <View style={styles.redRibbon}>
           <Text style={styles.redRibbonText}>Launching</Text>
@@ -61,32 +67,32 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         </View>
       </View>
       
-      <View style={styles.info}>
-        <Text style={styles.title} numberOfLines={1}>{property.title}</Text>
-        <Text style={styles.priceRange}>{property.price}</Text>
+      <View style={[styles.info, { padding: isMobile ? 12 : 15 }]}>
+        <Text style={[styles.title, { fontSize: isMobile ? 15 : 18, marginBottom: isMobile ? 4 : 6 }]} numberOfLines={1}>{property.title}</Text>
+        <Text style={[styles.priceRange, { fontSize: isMobile ? 14 : 17, marginBottom: isMobile ? 10 : 15 }]}>{property.price}</Text>
 
-        <View style={styles.detailItem}>
-          <Ionicons name="location" size={16} color="#000" />
-          <Text style={styles.detailValue} numberOfLines={1}>{property.location}</Text>
+        <View style={[styles.detailItem, { gap: isMobile ? 6 : 8, marginBottom: isMobile ? 8 : 12 }]}>
+          <Ionicons name="location" size={16} color={Colors.primary} />
+          <Text style={[styles.detailValue, { fontSize: isMobile ? 11 : 13 }]} numberOfLines={1}>{property.location}</Text>
         </View>
 
-        <View style={styles.servingSection}>
-          <View style={styles.servingHeader}>
-            <Ionicons name="navigate-outline" size={14} color="#6b7280" />
-            <Text style={styles.servingLabel}>Serving Location :</Text>
+        <View style={[styles.servingSection, { marginBottom: isMobile ? 10 : 15, padding: isMobile ? 8 : 8 }]}>
+          <View style={[styles.servingHeader, { gap: isMobile ? 4 : 6, marginBottom: isMobile ? 4 : 4 }]}>
+            <Ionicons name="navigate-outline" size={14} color={Colors.textMuted} />
+            <Text style={[styles.servingLabel, { fontSize: isMobile ? 10 : 11 }]}>Serving Location :</Text>
           </View>
-          <Text style={styles.servingText} numberOfLines={2}>
+          <Text style={[styles.servingText, { fontSize: isMobile ? 10 : 11, lineHeight: isMobile ? 14 : 16 }]} numberOfLines={2}>
             {property.servingLocations || 'Selaiyur, Tambaram, Chromepet, Pallavaram, Sittalapakkam'}
           </Text>
         </View>
 
         <View style={styles.statsRow}>
           <View style={styles.statBox}>
-            <Ionicons name="resize-outline" size={12} color="#6b7280" />
+            <Ionicons name="resize-outline" size={12} color={Colors.textMuted} />
             <Text style={styles.statValue}>{property.acres || '2.5'} Ac</Text>
           </View>
           <View style={styles.statBox}>
-            <Ionicons name="business-outline" size={12} color="#6b7280" />
+            <Ionicons name="business-outline" size={12} color={Colors.textMuted} />
             <Text style={styles.statValue}>{property.beds} BHK</Text>
           </View>
         </View>
@@ -97,23 +103,20 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardBg,
     borderRadius: 15,
     marginBottom: 20,
-    marginHorizontal: Platform.OS === 'web' ? 0 : 3,
-    width: Platform.OS === 'web' ? '31%' : '98%', // 3 columns on web, singularly (full width) on phone
-    shadowColor: '#000',
+    shadowColor: Colors.secondary,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 5,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#f3f4f6',
+    borderColor: Colors.border,
   },
   imageContainer: {
     width: '100%',
-    height: Platform.OS === 'web' ? 160 : 180, 
     position: 'relative',
   },
   image: {
@@ -124,14 +127,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 10,
-    backgroundColor: '#ff4b4b',
+    backgroundColor: Colors.error,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 4,
     zIndex: 10,
   },
   redRibbonText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 8,
     fontWeight: '900',
     textTransform: 'uppercase',
@@ -140,71 +143,55 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderTopRightRadius: 10,
   },
   statusText: {
-    color: '#000',
+    color: Colors.secondary,
     fontSize: 10,
     fontWeight: '900',
   },
-  info: {
-    padding: Platform.OS === 'web' ? 15 : 12,
-  },
+  info: {},
   title: {
-    fontSize: Platform.OS === 'web' ? 18 : 15,
     fontWeight: '800',
-    color: '#111827',
-    marginBottom: Platform.OS === 'web' ? 6 : 4,
+    color: Colors.text,
   },
   priceRange: {
-    fontSize: Platform.OS === 'web' ? 17 : 14,
     fontWeight: '900',
-    color: '#FBB03B',
-    marginBottom: Platform.OS === 'web' ? 15 : 10,
+    color: Colors.primary,
   },
   detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Platform.OS === 'web' ? 8 : 6,
-    marginBottom: Platform.OS === 'web' ? 12 : 8,
   },
   detailValue: {
-    fontSize: Platform.OS === 'web' ? 13 : 11,
-    color: '#1f2937',
+    color: Colors.text,
     fontWeight: '700',
   },
   servingSection: {
-    marginBottom: Platform.OS === 'web' ? 15 : 10,
-    backgroundColor: '#f9fafb',
-    padding: Platform.OS === 'web' ? 8 : 8,
+    backgroundColor: Colors.lightGray,
     borderRadius: 8,
   },
   servingHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Platform.OS === 'web' ? 6 : 4,
-    marginBottom: Platform.OS === 'web' ? 4 : 4,
   },
   servingLabel: {
-    fontSize: Platform.OS === 'web' ? 11 : 10,
-    color: '#6b7280',
+    color: Colors.textMuted,
     fontWeight: '800',
   },
   servingText: {
-    fontSize: Platform.OS === 'web' ? 11 : 10,
-    color: '#4b5563',
+    color: Colors.text,
     fontWeight: '600',
-    lineHeight: Platform.OS === 'web' ? 16 : 14,
   },
   statsRow: {
     flexDirection: 'row',
     marginTop: 5,
     gap: 8,
     borderTopWidth: 1,
-    borderTopColor: '#f9fafb',
+    borderTopColor: Colors.border,
     paddingTop: 12,
     justifyContent: 'space-between',
   },
@@ -215,7 +202,7 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 10,
-    color: '#1f2937',
+    color: Colors.text,
     fontWeight: '800',
   },
 });

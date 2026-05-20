@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, Text, View } from 'react-native';
+import { Colors } from '../constants/theme';
 
 interface FilterBarProps {
   activeFilter: string;
@@ -50,21 +49,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 25,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardBg,
     borderWidth: 1,
-    borderColor: '#f3f4f6',
+    borderColor: Colors.border,
   },
   activeFilterItem: {
-    backgroundColor: '#3b82f6',
-    borderColor: '#3b82f6',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   filterText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: Colors.textMuted,
   },
   activeFilterText: {
-    color: '#fff',
+    color: Colors.white, // Crisp high-contrast white text on green active background
+    fontWeight: '700',
   },
 });
 

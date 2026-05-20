@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { Colors } from '../constants/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -52,7 +53,7 @@ const SiteVisit = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.title}>Request Site Visit</Text>
         <View style={{ width: 40 }} />
@@ -110,6 +111,7 @@ const SiteVisit = () => {
         <TextInput
           style={styles.notesInput}
           placeholder="Anything you'd like to tell the agent..."
+          placeholderTextColor={Colors.textLight}
           multiline
           numberOfLines={4}
         />
@@ -125,7 +127,7 @@ const SiteVisit = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingTop: 60,
   },
   header: {
@@ -142,15 +144,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   scrollContent: {
     paddingHorizontal: 25,
     paddingBottom: 40,
   },
   propertyPreview: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     padding: 20,
     borderRadius: 20,
     marginBottom: 30,
@@ -158,36 +160,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#f1f5f9',
+    borderColor: Colors.border,
   },
   propertyInfo: {
     flex: 1,
   },
   propertyName: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   propertyLocation: {
     fontSize: 14,
-    color: '#6b7280',
+    color: Colors.textMuted,
     marginTop: 4,
+    fontWeight: '500',
   },
   badge: {
-    backgroundColor: '#ecfdf5',
+    backgroundColor: Colors.lightGray,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
   },
   badgeText: {
-    color: '#059669',
+    color: Colors.primary,
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#1a1a1a',
+    color: Colors.text,
     marginBottom: 20,
     marginTop: 10,
   },
@@ -199,41 +202,41 @@ const styles = StyleSheet.create({
     height: 90,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 15,
     marginRight: 12,
     borderWidth: 1,
-    borderColor: '#f1f5f9',
+    borderColor: Colors.border,
   },
   selectedDateItem: {
-    backgroundColor: '#FBB03B',
-    borderColor: '#FBB03B',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
     elevation: 4,
-    shadowColor: '#FBB03B',
+    shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
   },
   dayName: {
     fontSize: 11,
-    color: '#94a3b8',
+    color: Colors.textMuted,
     fontWeight: '700',
     marginBottom: 4,
     textTransform: 'uppercase',
   },
   dayNum: {
     fontSize: 20,
-    color: '#1e293b',
+    color: Colors.text,
     fontWeight: '900',
     marginBottom: 2,
   },
   monthName: {
     fontSize: 11,
-    color: '#64748b',
+    color: Colors.textLight,
     fontWeight: '700',
   },
   selectedDateText: {
-    color: '#000',
+    color: Colors.white,
   },
   slotsGrid: {
     flexDirection: 'row',
@@ -244,43 +247,44 @@ const styles = StyleSheet.create({
   slotItem: {
     width: (width - 74) / 3,
     paddingVertical: 12,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 10,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#f3f4f6',
+    borderColor: Colors.border,
   },
   selectedSlot: {
-    backgroundColor: '#FBB03B',
-    borderColor: '#FBB03B',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   slotText: {
     fontSize: 13,
-    fontWeight: '600',
-    color: '#6b7280',
+    fontWeight: '700',
+    color: Colors.textMuted,
   },
   selectedSlotText: {
-    color: '#000',
+    color: Colors.white,
   },
   notesInput: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 12,
     padding: 15,
     fontSize: 16,
+    color: Colors.text,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     minHeight: 120,
     textAlignVertical: 'top',
     marginBottom: 40,
   },
   requestButton: {
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     borderRadius: 50,
     padding: 18,
     alignItems: 'center',
   },
   requestButtonText: {
-    color: '#000',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '800',
   },

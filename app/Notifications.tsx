@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import NotificationCard from '../components/NotificationCard';
+import { Colors } from '../constants/theme';
 
 const Notifications = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const Notifications = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.title}>Notifications</Text>
         <TouchableOpacity>
@@ -50,7 +51,7 @@ const Notifications = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingTop: 60,
   },
   header: {
@@ -67,13 +68,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   markAll: {
     fontSize: 14,
-    color: '#6b7280',
-    fontWeight: '600',
+    color: Colors.textMuted,
+    fontWeight: '700',
   },
   scrollContent: {
     paddingHorizontal: 25,

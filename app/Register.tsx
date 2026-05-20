@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../constants/theme';
 
 const Register = () => {
   const router = useRouter();
@@ -21,13 +22,13 @@ const Register = () => {
   });
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
 
         <View style={styles.logoContainer}>
@@ -47,7 +48,7 @@ const Register = () => {
               style={styles.input}
               placeholder="John Doe"
               value={formData.name}
-              onChangeText={(text) => setFormData({...formData, name: text})}
+              onChangeText={(text) => setFormData({ ...formData, name: text })}
             />
           </View>
 
@@ -57,7 +58,7 @@ const Register = () => {
               style={styles.input}
               placeholder="name@company.com"
               value={formData.email}
-              onChangeText={(text) => setFormData({...formData, email: text})}
+              onChangeText={(text) => setFormData({ ...formData, email: text })}
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -69,12 +70,12 @@ const Register = () => {
               style={styles.input}
               placeholder="••••••••"
               value={formData.password}
-              onChangeText={(text) => setFormData({...formData, password: text})}
+              onChangeText={(text) => setFormData({ ...formData, password: text })}
               secureTextEntry
             />
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.registerButton}
             onPress={() => router.replace('/Home')}
           >
@@ -96,7 +97,7 @@ const Register = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   scrollContainer: {
     padding: 30,
@@ -113,13 +114,13 @@ const styles = StyleSheet.create({
   logoIcon: {
     width: 30,
     height: 30,
-    backgroundColor: '#000',
+    backgroundColor: Colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ rotate: '45deg' }],
   },
   logoIconText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '700',
     transform: [{ rotate: '-45deg' }],
@@ -129,15 +130,16 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 15,
     letterSpacing: 1,
+    color: Colors.text,
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.text,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6b7280',
+    color: Colors.textMuted,
     marginTop: 5,
     marginBottom: 40,
   },
@@ -150,19 +152,20 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: Colors.text,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.inputBg,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.inputBorder,
     borderRadius: 12,
     padding: 15,
     fontSize: 16,
+    color: Colors.text,
   },
   registerButton: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.primary,
     borderRadius: 50,
     padding: 18,
     justifyContent: 'center',
@@ -171,9 +174,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   registerButtonText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   footer: {
     flexDirection: 'row',
@@ -181,13 +184,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    color: '#6b7280',
+    color: Colors.textMuted,
     fontSize: 14,
   },
   loginText: {
-    color: '#000',
+    color: Colors.primary,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
 

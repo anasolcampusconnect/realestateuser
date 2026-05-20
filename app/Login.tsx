@@ -15,6 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Colors } from '../constants/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -39,7 +40,7 @@ const Login = () => {
             <View style={styles.heroOverlay}>
               <View style={styles.heroHeader}>
                 <View style={styles.heroLogoCircle}>
-                  <Ionicons name="business" size={24} color="#000" />
+                  <Ionicons name="business" size={24} color={Colors.white} />
                 </View>
                 <View>
                   <Text style={styles.heroLogoText}>REAL</Text>
@@ -85,6 +86,7 @@ const Login = () => {
                 <TextInput 
                   style={styles.input}
                   placeholder="info.user@mail.com"
+                  placeholderTextColor={Colors.textLight}
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
@@ -98,12 +100,13 @@ const Login = () => {
                   <TextInput 
                     style={styles.passwordInput}
                     placeholder="••••••••"
+                    placeholderTextColor={Colors.textLight}
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
                   />
                   <TouchableOpacity>
-                    <Ionicons name="eye-outline" size={20} color="#9ca3af" />
+                    <Ionicons name="eye-outline" size={20} color={Colors.textMuted} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -114,7 +117,7 @@ const Login = () => {
                   onPress={() => setRememberMe(!rememberMe)}
                 >
                   <View style={[styles.checkbox, rememberMe && styles.checkboxActive]}>
-                    {rememberMe && <Ionicons name="checkmark" size={12} color="#fff" />}
+                    {rememberMe && <Ionicons name="checkmark" size={12} color={Colors.white} />}
                   </View>
                   <Text style={styles.rememberText}>Remember Me</Text>
                 </TouchableOpacity>
@@ -145,18 +148,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   leftPanel: {
     flex: 1.2,
-    backgroundColor: '#000',
+    backgroundColor: Colors.secondary,
   },
   heroImage: {
     flex: 1,
   },
   heroOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: 'rgba(30, 33, 25, 0.45)',
     padding: 60,
     justifyContent: 'space-between',
   },
@@ -169,18 +172,18 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   heroLogoText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: '900',
     letterSpacing: 1,
   },
   heroLogoSub: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 14,
     fontWeight: '400',
     marginTop: -4,
@@ -189,14 +192,14 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   heroTitle: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 56,
     fontWeight: '900',
     lineHeight: 64,
     marginBottom: 20,
   },
   heroSubtitle: {
-    color: 'rgba(255,255,255,0.8)',
+    color: 'rgba(250,249,245,0.85)',
     fontSize: 18,
     fontWeight: '500',
     maxWidth: 400,
@@ -211,15 +214,15 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(250,249,245,0.25)',
   },
   activeDot: {
     width: 24,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.primary,
   },
   rightPanel: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   formWrapper: {
     flex: 1,
@@ -232,13 +235,13 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'web' ? 0 : 40, // Added for mobile status bar safety
   },
   topBtn: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.secondary,
     paddingHorizontal: 24,
     paddingVertical: 10,
     borderRadius: 20,
   },
   topBtnText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -250,13 +253,13 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 36,
     fontWeight: '900',
-    color: '#000',
+    color: Colors.text,
     lineHeight: 44,
     marginBottom: 8,
   },
   welcomeSub: {
     fontSize: 16,
-    color: '#9ca3af',
+    color: Colors.textMuted,
     marginBottom: 40,
     fontWeight: '500',
   },
@@ -266,25 +269,25 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#000',
+    color: Colors.text,
     marginBottom: 10,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.inputBg,
     borderWidth: 1.5,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.inputBorder,
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 15,
-    color: '#000',
+    color: Colors.text,
   },
   passwordWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.inputBg,
     borderWidth: 1.5,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.inputBorder,
     borderRadius: 10,
     paddingHorizontal: 16,
   },
@@ -292,7 +295,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 14,
     fontSize: 15,
-    color: '#000',
+    color: Colors.text,
   },
   formFooter: {
     flexDirection: 'row',
@@ -310,38 +313,38 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 6,
     borderWidth: 1.5,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkboxActive: {
-    backgroundColor: '#000',
-    borderColor: '#000',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   rememberText: {
     fontSize: 14,
-    color: '#4b5563',
+    color: Colors.textMuted,
     fontWeight: '600',
   },
   forgotText: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: Colors.textMuted,
     fontWeight: '600',
   },
   loginBtn: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.primary,
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 30,
-    shadowColor: '#000',
+    shadowColor: Colors.secondary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 4,
   },
   loginBtnText: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: 16,
     fontWeight: '800',
   },
@@ -351,12 +354,12 @@ const styles = StyleSheet.create({
   },
   bottomLinkText: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: Colors.textMuted,
     fontWeight: '500',
   },
   bottomLinkAction: {
     fontSize: 14,
-    color: '#4b5563',
+    color: Colors.primary,
     fontWeight: '800',
   },
 });

@@ -13,6 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Colors } from '../constants/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -34,14 +35,14 @@ const Search = () => {
       <SafeAreaView style={styles.header}>
         <View style={styles.headerContent}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
+            <Ionicons name="arrow-back" size={24} color={Colors.secondary} />
           </TouchableOpacity>
           <View style={styles.searchBar}>
-            <Ionicons name="search" size={20} color="#6b7280" />
+            <Ionicons name="search" size={20} color={Colors.textMuted} />
             <TextInput 
               placeholder="Search by location..." 
               style={styles.searchInput}
-              placeholderTextColor="#9ca3af"
+              placeholderTextColor={Colors.textLight}
             />
           </View>
         </View>
@@ -72,7 +73,7 @@ const Search = () => {
               <Text style={styles.budgetLabel}>Min</Text>
               <Text style={styles.budgetValue}>$ 40L</Text>
             </View>
-            <Ionicons name="remove" size={20} color="#d1d5db" />
+            <Ionicons name="remove" size={20} color={Colors.border} />
             <View style={styles.budgetBox}>
               <Text style={styles.budgetLabel}>Max</Text>
               <Text style={styles.budgetValue}>$ 2.5Cr</Text>
@@ -134,7 +135,7 @@ const Search = () => {
           <View style={styles.facilitiesRow}>
             {facilities.map(facility => (
               <View key={facility} style={styles.facilityTag}>
-                <Ionicons name="checkmark-circle" size={16} color="#FBB03B" />
+                <Ionicons name="checkmark-circle" size={16} color={Colors.accent} />
                 <Text style={styles.facilityText}>{facility}</Text>
               </View>
             ))}
@@ -156,12 +157,12 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: Colors.border,
     paddingBottom: 15,
   },
   headerContent: {
@@ -175,16 +176,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.white,
     paddingHorizontal: 15,
     paddingVertical: 12,
     borderRadius: 10,
     gap: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#000',
+    color: Colors.text,
     fontWeight: '500',
   },
   scrollContent: {
@@ -192,10 +195,12 @@ const styles = StyleSheet.create({
   },
   toggleContainer: {
     flexDirection: 'row',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.white,
     borderRadius: 8,
     padding: 4,
     marginBottom: 35,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   toggleBtn: {
     flex: 1,
@@ -204,15 +209,15 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activeToggle: {
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
   },
   toggleText: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#6b7280',
+    color: Colors.textMuted,
   },
   activeToggleText: {
-    color: '#000',
+    color: Colors.white,
   },
   section: {
     marginBottom: 35,
@@ -220,7 +225,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#000',
+    color: Colors.text,
     marginBottom: 15,
   },
   budgetRow: {
@@ -231,22 +236,22 @@ const styles = StyleSheet.create({
   },
   budgetBox: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     padding: 15,
     borderRadius: 8,
   },
   budgetLabel: {
     fontSize: 10,
-    color: '#9ca3af',
+    color: Colors.textMuted,
     fontWeight: '800',
     textTransform: 'uppercase',
   },
   budgetValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#000',
+    color: Colors.text,
     marginTop: 5,
   },
   optionsRow: {
@@ -257,36 +262,36 @@ const styles = StyleSheet.create({
   optionBtn: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     borderRadius: 8,
   },
   activeOption: {
-    backgroundColor: '#FBB03B',
-    borderColor: '#FBB03B',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   optionText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#4b5563',
+    color: Colors.textMuted,
   },
   activeOptionText: {
-    color: '#000',
+    color: Colors.white,
   },
   circleOption: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
     justifyContent: 'center',
     alignItems: 'center',
   },
   activeCircle: {
-    backgroundColor: '#FBB03B',
-    borderColor: '#FBB03B',
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
   },
   facilitiesRow: {
     flexDirection: 'row',
@@ -297,7 +302,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.border,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 20,
@@ -305,21 +312,21 @@ const styles = StyleSheet.create({
   facilityText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#4b5563',
+    color: Colors.textMuted,
   },
   footer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     padding: 20,
     paddingBottom: Platform.OS === 'ios' ? 40 : 20,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: Colors.border,
   },
   applyBtn: {
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.accent,
     height: 56,
     borderRadius: 8,
     justifyContent: 'center',
@@ -328,7 +335,7 @@ const styles = StyleSheet.create({
   applyBtnText: {
     fontSize: 16,
     fontWeight: '900',
-    color: '#000',
+    color: Colors.secondary,
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../constants/theme';
 
 interface PaymentCardProps {
   transaction: {
@@ -22,7 +23,7 @@ const PaymentCard = ({ transaction }: PaymentCardProps) => {
         <Ionicons 
           name={isCompleted ? "checkmark-circle" : "time"} 
           size={24} 
-          color={isCompleted ? "#10b981" : "#f59e0b"} 
+          color={isCompleted ? "#1E4C3C" : "#D97706"} 
         />
       </View>
       <View style={styles.content}>
@@ -45,11 +46,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardBg,
     borderRadius: 20,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#f3f4f6',
+    borderColor: Colors.border,
+    shadowColor: Colors.secondary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   iconBg: {
     width: 50,
@@ -59,10 +65,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   completedBg: {
-    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    backgroundColor: 'rgba(30, 76, 60, 0.12)',
   },
   pendingBg: {
-    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    backgroundColor: 'rgba(217, 119, 6, 0.12)',
   },
   content: {
     flex: 1,
@@ -71,16 +77,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.text,
   },
   property: {
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textMuted,
     marginTop: 2,
+    fontWeight: '500',
   },
   date: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: Colors.textLight,
     marginTop: 4,
   },
   rightContent: {
@@ -88,20 +95,20 @@ const styles = StyleSheet.create({
   },
   amount: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   status: {
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '800',
     textTransform: 'uppercase',
     marginTop: 4,
   },
   completedText: {
-    color: '#10b981',
+    color: '#1E4C3C',
   },
   pendingText: {
-    color: '#f59e0b',
+    color: '#D97706',
   },
 });
 

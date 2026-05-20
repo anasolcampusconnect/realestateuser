@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { Colors } from '../constants/theme';
 
 const Documents = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const Documents = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={Colors.text} />
         </TouchableOpacity>
         <Text style={styles.title}>Documents</Text>
         <View style={{ width: 40 }} />
@@ -26,14 +27,14 @@ const Documents = () => {
         {docs.map(doc => (
           <TouchableOpacity key={doc.id} style={styles.docCard}>
             <View style={styles.iconBg}>
-              <Ionicons name="document-text" size={24} color="#000" />
+              <Ionicons name="document-text" size={24} color={Colors.white} />
             </View>
             <View style={styles.docMeta}>
               <Text style={styles.docTitle}>{doc.title}</Text>
               <Text style={styles.docInfo}>{doc.type} • {doc.size} • {doc.date}</Text>
             </View>
             <TouchableOpacity style={styles.downloadButton}>
-              <Ionicons name="download-outline" size={22} color="#6b7280" />
+              <Ionicons name="download-outline" size={22} color={Colors.textMuted} />
             </TouchableOpacity>
           </TouchableOpacity>
         ))}
@@ -45,7 +46,7 @@ const Documents = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingTop: 60,
   },
   header: {
@@ -62,8 +63,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   scrollContent: {
     paddingHorizontal: 25,
@@ -73,17 +74,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.cardBg,
     borderRadius: 20,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#f3f4f6',
+    borderColor: Colors.border,
+    shadowColor: Colors.secondary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
   },
   iconBg: {
     width: 50,
     height: 50,
     borderRadius: 12,
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -93,12 +99,12 @@ const styles = StyleSheet.create({
   },
   docTitle: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#1a1a1a',
+    fontWeight: '800',
+    color: Colors.text,
   },
   docInfo: {
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textMuted,
     marginTop: 4,
     fontWeight: '600',
   },

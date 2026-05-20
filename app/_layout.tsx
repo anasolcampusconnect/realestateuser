@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { FavoritesProvider } from '../context/FavoritesContext';
+import { Colors } from '../constants/theme';
 
 export default function Layout() {
   return (
@@ -7,7 +8,7 @@ export default function Layout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: '#fff' },
+          contentStyle: { backgroundColor: Colors.background },
         }}
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />

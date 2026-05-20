@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import PropertyCard from '../components/PropertyCard';
 import { StatusBar } from 'expo-status-bar';
+import { Colors } from '../constants/theme';
 
 const { width } = Dimensions.get('window');
 
@@ -46,14 +47,14 @@ const SearchResults = () => {
       <SafeAreaView style={styles.header}>
         <View style={styles.headerContent}>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
+            <Ionicons name="arrow-back" size={24} color={Colors.secondary} />
           </TouchableOpacity>
           <View style={styles.titleContainer}>
             <Text style={styles.headerTitle}>Search Results</Text>
             <Text style={styles.headerSub}>{results.length} Properties Found</Text>
           </View>
           <TouchableOpacity style={styles.filterBtn} onPress={() => router.push('/Search')}>
-            <Ionicons name="options-outline" size={20} color="#000" />
+            <Ionicons name="options-outline" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -77,8 +78,8 @@ const SearchResults = () => {
             ))
           ) : (
             <View style={{ marginTop: 50, alignItems: 'center' }}>
-              <Ionicons name="search-outline" size={60} color="#e5e7eb" />
-              <Text style={{ marginTop: 20, fontSize: 16, color: '#6b7280', fontWeight: '600' }}>
+              <Ionicons name="search-outline" size={60} color={Colors.border} />
+              <Text style={{ marginTop: 20, fontSize: 16, color: Colors.textMuted, fontWeight: '600' }}>
                 No properties found matching "{query}"
               </Text>
             </View>
@@ -94,12 +95,12 @@ const SearchResults = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: Colors.border,
   },
   headerContent: {
     flexDirection: 'row',
@@ -115,18 +116,18 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: '#000',
+    color: Colors.text,
   },
   headerSub: {
     fontSize: 12,
-    color: '#6b7280',
+    color: Colors.textMuted,
     fontWeight: '600',
   },
   filterBtn: {
     width: 40,
     height: 40,
     borderRadius: 10,
-    backgroundColor: '#FBB03B',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -140,17 +141,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tag: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: Colors.cardBg,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: Colors.border,
   },
   tagText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#4b5563',
+    color: Colors.textMuted,
   },
   grid: {
     flexDirection: 'row',
